@@ -32,8 +32,9 @@ fi
 # --- 3. Обновление для DNF (Fedora, CentOS/RHEL 8+, AlmaLinux, Rocky Linux) ---
 if command -v dnf &> /dev/null; then
     echo "Detected DNF package manager."
-    sudo dnf update -y
+    sudo dnf upgrade -y
     sudo dnf autoremove -y
+    sudo dnf clean all
     echo "DNF packages updated."
 fi
 
