@@ -33,6 +33,7 @@ fi
 if command -v dnf &> /dev/null; then
     echo "Detected DNF package manager."
     sudo dnf upgrade -y
+
     sudo dnf autoremove -y
     sudo dnf clean all
     echo "DNF packages updated."
@@ -43,6 +44,7 @@ if command -v zypper &> /dev/null; then
     echo "Detected Zypper package manager."
     sudo zypper refresh
     sudo zypper update -y
+
     sudo zypper clean -a # Очистка кэша
     echo "Zypper packages updated."
 fi
@@ -51,6 +53,9 @@ fi
 if command -v flatpak &> /dev/null; then
     echo "Detected Flatpak support."
     flatpak update -y # -y для автоматического подтверждения
+
+    flatpak uninstall --unused # Удаляет неиспользуемые рантаймы и зависимости Flatpak.
+    flatpak repair # Иногда может помочь с проблемами кэша.
     echo "Flatpak packages updated."
 fi
 
@@ -58,6 +63,8 @@ fi
 if command -v snap &> /dev/null; then
     echo "Detected Snap support."
     sudo snap refresh
+
+    snap set system refresh.retain=2 # Контролирует, сколько старых версий Snap пакета хранить.
     echo "Snap packages updated."
 fi
 
